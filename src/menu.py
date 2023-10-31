@@ -64,7 +64,7 @@ def get_companies_and_vacancies_count(db_manager_obj: DBManager):
 def get_all_vacancies(db_manager_obj: DBManager):
     lst = db_manager_obj.get_all_vacancies()
     for item in lst:
-        print(f"{item[0]} - {item[1]} - {item[2]}")
+        print(f"{item[0]} - {item[1]} - {item[2]} - {item[3]}")
 
 
 def get_avg_salary(db_manager_obj: DBManager):
@@ -75,7 +75,7 @@ def get_avg_salary(db_manager_obj: DBManager):
 def get_vacancies_with_higher_salary(db_manager_obj: DBManager):
     lst = db_manager_obj.get_vacancies_with_higher_salary()
     for item in lst:
-        print(f"{item[0]} - {item[1]} - {item[2]}")
+        print(f"{item[0]} - {item[1]} - {item[2]} - {item[3]}")
 
 
 def get_vacancies_with_keyword(db_manager_obj: DBManager):

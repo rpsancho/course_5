@@ -13,7 +13,9 @@ class DBManager:
         return employers
 
     def get_all_vacancies(self) -> list:
-        vacancies = self.__fetch_all("SELECT name, salary_from, alternate_url FROM vacancies;")
+        vacancies = self.__fetch_all("SELECT employers.name, vacancies.name, vacancies.salary_from, "
+                                     "vacancies.alternate_url "
+                                     "FROM employers RIGHT JOIN vacancies USING (employer_id);")
         return vacancies
 
     def get_avg_salary(self) -> float:
@@ -21,13 +23,17 @@ class DBManager:
         return round(avg_salary[0][0])
 
     def get_vacancies_with_higher_salary(self) -> list:
-        vacancies = self.__fetch_all("SELECT name, salary_from, alternate_url FROM vacancies "
+        vacancies = self.__fetch_all("SELECT employers.name, vacancies.name, vacancies.salary_from, "
+                                     "vacancies.alternate_url "
+                                     "FROM employers RIGHT JOIN vacancies USING (employer_id) "
                                      "WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies);")
         return vacancies
 
     def get_vacancies_with_keyword(self, keyword) -> list:
-        vacancies = self.__fetch_all(f"SELECT name, salary_from, alternate_url FROM vacancies "
-                                     f"WHERE LOWER(name) LIKE '%{keyword.lower()}%';")
+        vacancies = self.__fetch_all(f"SELECT employers.name, vacancies.name, vacancies.salary_from, "
+                                     f"vacancies.alternate_url "
+                                     f"FROM employers RIGHT JOIN vacancies USING (employer_id)"
+                                     f"WHERE LOWER(vacancies.name) LIKE '%{keyword.lower()}%';")
         return vacancies
 
     def __fetch_all(self, query: str) -> list:
